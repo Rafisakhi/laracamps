@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/checkout', function () {
     return view('checkout');
@@ -35,5 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//socialte Google
+
+Route::get('sig-in-google', [UserController::class, 'google'])->name('user.login.google');
+
+Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback'])
+->name('user.google.callback');
 
 require __DIR__.'/auth.php';
